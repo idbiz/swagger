@@ -153,7 +153,7 @@ info:
   title: User Registration API
   description: API for registering a new user to the system.
   version: 1.0.0
-  servers:
+servers:
   - url: https://asia-southeast2-awangga.cloudfunctions.net
 
 paths:
@@ -250,7 +250,6 @@ paths:
                   response:
                     type: string
                     example: Hashing algorithm error
-
   /idbiz/auth/login/form:
     post:
       summary: Login a user
@@ -357,3 +356,4 @@ paths:
                   response:
                     type: string
                     example: MongoDB connection failed
+
