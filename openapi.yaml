@@ -251,7 +251,7 @@ paths:
                     type: string
                     example: Hashing algorithm error
 
-  /idbiz/auth/login/form
+  /idbiz/auth/login/form:
     post:
       summary: Login a user
       description: Authenticate a user with their email and password.
