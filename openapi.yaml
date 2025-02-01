@@ -206,10 +206,10 @@ paths:
                     type: string
                     example: "Database connection issue"
   
-  /idbiz/auth/register:
+  /auth/register:
     post:
       tags:
-        - Auth
+        - Auth User
       summary: Register a new user
       description: Create a new user with the provided details.
       requestBody:
@@ -304,7 +304,7 @@ paths:
   /auth/login/form:
     post:
       tags:
-        - Auth
+        - Auth User
       summary: User login
       description: Allows users to log in by providing their email and password. Returns user data and an authentication token on successful login.
       requestBody:
@@ -412,10 +412,10 @@ paths:
                     type: string
                     example: "An unexpected error occurred."
   
-  /auth/users/cust:
+  /auth/users/all:
     get:
       tags:
-        - Auth
+        - Auth User
       summary: Retrieve all customer accounts
       description: Fetches all customer account data from the database.
       responses:
