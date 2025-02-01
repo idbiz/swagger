@@ -4,7 +4,7 @@ info:
   description: Dokumentasi API Proyek 3
   version: 1.0.0
 servers:
-  - url: https://asia-southeast2-awangga.cloudfunctions.net/idbiz
+  - url: https://asia-southeast2-awangga.cloudfunctions.net/idbiz/
 
 paths:
   auth/register/admin:
