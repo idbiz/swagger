@@ -210,8 +210,8 @@ paths:
     post:
       tags:
         - Auth User
-      summary: Register a new user
-      description: Create a new user with the provided details.
+      summary: Register akun user baru
+      description: Endpoint untuk mendaftarkan akun user baru
       requestBody:
         required: true
         content:
@@ -305,8 +305,8 @@ paths:
     post:
       tags:
         - Auth User
-      summary: User login
-      description: Allows users to log in by providing their email and password. Returns user data and an authentication token on successful login.
+      summary: Login User
+      description: Endpoint untuk login user
       requestBody:
         required: true
         content:
@@ -411,13 +411,12 @@ paths:
                   response:
                     type: string
                     example: "An unexpected error occurred."
-  
   /auth/users/all:
     get:
       tags:
         - Auth User
-      summary: Retrieve all customer accounts
-      description: Fetches all customer account data from the database.
+      summary: Get All Akun User
+      description: Endpoint untuk mengambil semua data user
       responses:
         '200':
           description: Successfully retrieved user data.
@@ -466,8 +465,997 @@ paths:
                   response:
                     type: string
                     example: connection timeout
+  /update/user:
+    put:
+      tags:
+        - Auth User
+      summary: Memperbarui data pengguna berdasarkan ID
+      description: Endpoint untuk memperbarui data pengguna berdasarkan ID yang diberikan.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID pengguna yang ingin diperbarui.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "John Doe"
+                phonenumber:
+                  type: string
+                  example: "6281234567890"
+                email:
+                  type: string
+                  example: "johndoe@example.com"
+                team:
+                  type: string
+                  example: "Engineering"
+                scope:
+                  type: string
+                  example: "admin"
+                jumlahAntrian:
+                  type: integer
+                  example: 5
+                role:
+                  type: string
+                  example: "user"
+                password:
+                  type: string
+                  example: "securepassword123"
+      responses:
+        "200":
+          description: Pengguna berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: User berhasil diperbarui
+        "400":
+          description: Data tidak valid atau kurang lengkap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Data pengguna tidak valid
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan pada server
 
 
+  /insert/portofolio:
+    post:
+      tags:
+        - Portofolio
+      summary: Membuat portofolio baru
+      description: Endpoint untuk menyimpan portofolio desain baru ke dalam sistem.
+      operationId: createPortofolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama_desain:
+                  type: string
+                  example: "Logo Perusahaan XYZ"
+                deskripsi:
+                  type: string
+                  example: "Desain logo modern untuk perusahaan XYZ."
+                gambar:
+                  type: string
+                  example: "https://example.com/uploads/logo_xyz.png"
+                kategori:
+                  type: string
+                  example: "Logo Design"
+                harga:
+                  type: string
+                  example: "500000"
+      responses:
+        "200":
+          description: Portofolio berhasil disimpan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: Portofolio berhasil disimpan
+        "400":
+          description: Bad request - Data tidak valid atau kurang lengkap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Data portofolio tidak valid
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan pada server
+  /portofolio:
+    get:
+      tags:
+        - Portofolio
+      summary: Mendapatkan semua portofolio
+      description: Mengembalikan daftar semua portofolio yang ada dalam sistem.
+      operationId: getAllPortofolio
+      responses:
+        "200":
+          description: Daftar portofolio berhasil diambil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "64b3fbc2e4b0a72b640e9a5e"
+                        nama_desain:
+                          type: string
+                          example: "Logo Perusahaan XYZ"
+                        deskripsi:
+                          type: string
+                          example: "Desain logo modern untuk perusahaan XYZ."
+                        gambar:
+                          type: string
+                          example: "https://example.com/uploads/logo_xyz.png"
+                        kategori:
+                          type: string
+                          example: "Logo Design"
+                        harga:
+                          type: string
+                          example: "500000"
+        "400":
+          description: Terjadi kesalahan saat mengambil data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan saat mengambil portofolio
+  /portofolio/:
+    get:
+      tags:
+        - Portofolio
+      summary: Mendapatkan portofolio berdasarkan ID
+      description: Mengembalikan detail portofolio berdasarkan ID yang diberikan.
+      operationId: getPortofolioByID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID portofolio yang ingin diambil.
+      responses:
+        "200":
+          description: Portofolio berhasil ditemukan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "64b3fbc2e4b0a72b640e9a5e"
+                      nama_desain:
+                        type: string
+                        example: "Logo Perusahaan XYZ"
+                      deskripsi:
+                        type: string
+                        example: "Desain logo modern untuk perusahaan XYZ."
+                      gambar:
+                        type: string
+                        example: "https://example.com/uploads/logo_xyz.png"
+                      kategori:
+                        type: string
+                        example: "Logo Design"
+                      harga:
+                        type: string
+                        example: "500000"
+        "400":
+          description: ID tidak valid atau tidak diberikan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: ID tidak valid
+        "404":
+          description: Portofolio tidak ditemukan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Portofolio tidak ditemukan
+  /update/portofolio:
+    put:
+      tags:
+        - Portofolio
+      summary: Memperbarui portofolio berdasarkan ID
+      description: Endpoint untuk memperbarui portofolio berdasarkan ID yang diberikan.
+      operationId: updatePortofolio
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID portofolio yang ingin diperbarui.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nama_desain:
+                  type: string
+                  example: "Logo Perusahaan XYZ"
+                deskripsi:
+                  type: string
+                  example: "Desain logo modern untuk perusahaan XYZ."
+                gambar:
+                  type: string
+                  example: "https://example.com/uploads/logo_xyz.png"
+                kategori:
+                  type: string
+                  example: "Logo Design"
+                harga:
+                  type: string
+                  example: "500000"
+      responses:
+        "200":
+          description: Portofolio berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: Portofolio berhasil diperbarui
+        "400":
+          description: Data tidak valid atau kurang lengkap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Data portofolio tidak valid
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan pada server
+  /delete/portofolio:
+    delete:
+      tags:
+        - Portofolio
+      summary: Menghapus portofolio berdasarkan ID
+      description: Endpoint untuk menghapus portofolio berdasarkan ID yang diberikan.
+      operationId: deletePortofolio
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID portofolio yang ingin dihapus.
+      responses:
+        "200":
+          description: Portofolio berhasil dihapus
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: Portofolio berhasil dihapus
+        "400":
+          description: ID tidak valid atau tidak diberikan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: ID tidak valid
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan pada server
+
+
+  /insert/pembayaran:
+    post:
+      tags:
+        - Transaksi
+      summary: Insert transaksi pembayaran
+      description: Endpoint untuk melakukan transaksi pembayaran dengan mengunggah bukti pembayaran.
+      operationId: insertPembayaran
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: "64b3fbc2e4b0a72b640e9a5e"
+                nama_pemesan:
+                  type: string
+                  example: "John Doe"
+                desain_id:
+                  type: string
+                  example: "desain123"
+                nama_desain:
+                  type: string
+                  example: "Desain Logo ABC"
+                harga:
+                  type: string
+                  example: "500000"
+                status_pesanan:
+                  type: string
+                  example: "Pending"
+                catatan_pesanan:
+                  type: string
+                  example: "Mohon revisi jika perlu"
+                bukti_pembayaran:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Transaksi berhasil dibuat
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Success"
+                  response:
+                    type: string
+                    example: "Transaction created successfully"
+                  location:
+                    type: string
+                    example: "https://github.com/uploads/bukti_pembayaran.jpg"
+                  info:
+                    type: string
+                    example: "{...transaksi details...}"
+        "400":
+          description: Bad request - Data tidak valid atau kurang lengkap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Error"
+                  response:
+                    type: string
+                    example: "Missing required fields"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Error"
+                  response:
+                    type: string
+                    example: "Failed to save transaction"
+  /transaksi/id:
+    get:
+      tags:
+        - Transaksi
+      summary: Ambil detail transaksi berdasarkan ID
+      description: Endpoint untuk mengambil data transaksi berdasarkan ID yang diberikan.
+      operationId: getTransaksiByID
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID transaksi yang ingin diambil.
+      responses:
+        "200":
+          description: Data transaksi ditemukan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "64b3fbc2e4b0a72b640e9a5e"
+                      userID:
+                        type: string
+                        example: "user123"
+                      namaPemesan:
+                        type: string
+                        example: "John Doe"
+                      desainID:
+                        type: string
+                        example: "desain456"
+                      namaDesain:
+                        type: string
+                        example: "Desain Logo XYZ"
+                      harga:
+                        type: string
+                        example: "500000"
+                      statusPesanan:
+                        type: string
+                        example: "Completed"
+                      catatanPesanan:
+                        type: string
+                        example: "Pesanan telah selesai dengan baik"
+                      buktiPembayaran:
+                        type: string
+                        example: "https://example.com/uploads/payment_proof.jpg"
+                      tanggalPesanan:
+                        type: string
+                        format: date-time
+                        example: "2024-02-01T12:34:56Z"
+        "400":
+          description: Bad request - ID tidak valid atau tidak diberikan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Error"
+                  response:
+                    type: string
+                    example: "Pesanan ID harus disertakan"
+        "404":
+          description: Data transaksi tidak ditemukan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Error"
+                  response:
+                    type: string
+                    example: "Pesanan tidak ditemukan"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Error"
+                  response:
+                    type: string
+                    example: "Terjadi kesalahan: Database error"
+  /transaksi/status:
+    get:
+      tags:
+        - Transaksi
+      summary: Mendapatkan transaksi berdasarkan status
+      description: Mengembalikan daftar transaksi yang memiliki status tertentu.
+      operationId: getTransaksiByStatus
+      parameters:
+        - name: status
+          in: query
+          required: true
+          description: Status pesanan yang ingin dicari
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Daftar transaksi berhasil diambil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "64b3fbc2e4b0a72b640e9a5e"
+                      userID:
+                        type: string
+                        example: "user123"
+                      namaPemesan:
+                        type: string
+                        example: "John Doe"
+                      desainID:
+                        type: string
+                        example: "desain456"
+                      namaDesain:
+                        type: string
+                        example: "Desain Logo XYZ"
+                      harga:
+                        type: string
+                        example: "500000"
+                      statusPesanan:
+                        type: string
+                        example: "Selesai"
+                      catatanPesanan:
+                        type: string
+                        example: "Pesanan telah selesai dengan baik"
+                      buktiPembayaran:
+                        type: string
+                        example: "https://example.com/uploads/payment_proof.jpg"
+                      tanggalPesanan:
+                        type: string
+                        format: date-time
+                        example: "2024-02-01T12:34:56Z"
+        "400":
+          description: Status pesanan harus disertakan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Status pesanan harus disertakan
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "404":
+          description: Tidak ada transaksi dengan status tersebut
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Tidak ada transaksi dengan status tersebut
+        "500":
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Database error
+  /data/transaksi:
+    get:
+      tags:
+        - Transaksi
+      summary: Mendapatkan semua transaksi
+      description: Mengembalikan daftar semua transaksi yang ada dalam sistem.
+      operationId: getAllTransaksi
+      responses:
+        "200":
+          description: Daftar transaksi berhasil diambil
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "64b3fbc2e4b0a72b640e9a5e"
+                        jumlah:
+                          type: number
+                          format: double
+                          example: 150000.00
+                        tanggal:
+                          type: string
+                          format: date-time
+                          example: 2024-01-24T12:34:56Z
+                        status_pesanan:
+                          type: string
+                          example: "selesai"
+        "400":
+          description: Terjadi kesalahan saat mengambil data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Terjadi kesalahan saat mengambil transaksi
+  /update/transaksi:
+    put:
+      tags:
+        - Transaksi
+      summary: Memperbarui transaksi berdasarkan ID
+      description: Endpoint untuk memperbarui transaksi berdasarkan ID yang diberikan.
+      operationId: updateTransaksi
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID transaksi yang ingin diperbarui.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                  example: "user123"
+                nama_pemesan:
+                  type: string
+                  example: "John Doe"
+                desain_id:
+                  type: string
+                  example: "desain456"
+                nama_desain:
+                  type: string
+                  example: "Desain Logo XYZ"
+                harga:
+                  type: string
+                  example: "500000"
+                status_pesanan:
+                  type: string
+                  example: "Completed"
+                catatan_pesanan:
+                  type: string
+                  example: "Pesanan telah selesai dengan baik"
+                bukti_pembayaran:
+                  type: string
+                  example: "https://example.com/uploads/payment_proof.jpg"
+                tanggal_pesanan:
+                  type: string
+                  format: date-time
+                  example: "2024-02-01T12:34:56Z"
+      responses:
+        "200":
+          description: Transaksi berhasil diperbarui
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: Transaksi berhasil diperbarui
+        "400":
+          description: Data tidak valid atau kurang lengkap
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: ID tidak valid atau data tidak lengkap
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Database error
+  /delete/transaksi:
+    delete:
+      tags:
+        - Transaksi
+      summary: Menghapus transaksi berdasarkan ID
+      description: Endpoint untuk menghapus transaksi berdasarkan ID yang diberikan.
+      operationId: deleteTransaksi
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: ID transaksi yang ingin dihapus.
+      responses:
+        "200":
+          description: Transaksi berhasil dihapus
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Success
+                  response:
+                    type: string
+                    example: Transaksi berhasil dihapus
+        "400":
+          description: ID tidak valid atau tidak diberikan
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: ID tidak valid
+        "403":
+          description: Token tidak valid
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Token Tidak Valid
+                  response:
+                    type: string
+                    example: Token tidak valid
+        "500":
+          description: Terjadi kesalahan pada server
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Error
+                  response:
+                    type: string
+                    example: Database error
+
+
+
+
+components:
+  securitySchemes:
+    token:
+      type: apiKey
+      name: login
+      in: header
+
+security:
+  - token: []
 
 
 # openapi: 3.0.3
@@ -614,8 +1602,3 @@ paths:
 #                   format: float
 #                   description: Coordinates of the region boundary
 #                   example: [107.575, -6.874]
-#   securitySchemes:
-#     token:
-#       type: apiKey
-#       name: login
-#       in: header
